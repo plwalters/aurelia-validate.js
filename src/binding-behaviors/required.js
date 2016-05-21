@@ -1,6 +1,6 @@
-import {ValidationRenderer} from './validation-renderer';
+import {ValidationRenderer} from '../validation-renderer';
 import {inject} from 'aurelia-dependency-injection';
-import {ValidationEngine} from './validation-engine';
+import {ValidationEngine} from '../validation-engine';
 import {getContextFor} from 'aurelia-binding';
 
 @inject(ValidationRenderer)
