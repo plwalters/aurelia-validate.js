@@ -6,10 +6,26 @@ export {Validator} from './validator';
 import {ValidationReporter} from 'aurelia-validation';
 import {ValidationReporter as ValidateJSReporter} from './validation-reporter';
 export {ValidationReporter} from './validation-reporter';
+import {ValidationRenderer} from './validation-renderer';
 export {ValidationRenderer} from './validation-renderer';
 
-export function configure(config) {
-  config.container.registerHandler(Validator, ValidateJSValidator);
-  config.container.registerHandler(ValidationReporter, ValidateJSReporter);
-  config.globalResources('./validate-binding-behavior');
+class Config {
+  constructor(container) {
+    this.container = container;
+  }
+  setRenderer(renderer) {
+    this.container.registerSingleton(ValidationRenderer, renderer);
+  }
+}
+
+export function configure(aurelia, callback) {
+  aurelia.container.registerHandler(Validator, ValidateJSValidator);
+  aurelia.container.registerHandler(ValidationReporter, ValidateJSReporter);
+  aurelia.globalResources('./validate-binding-behavior');
+  let config = new Config(aurelia.container);
+
+  if (typeof callback === 'function') {
+    callback(config);
+    return;
+  }
 }
